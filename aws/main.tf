@@ -3,16 +3,16 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 4.15"
     }
   }
 }
 
 # Provider config
 provider "aws" {
-  shared_credentials_file = "$home/.aws/credentials"
   profile                 = "default"
-  region                  = "ca-central-1"
+  shared_credentials_files = ["/home/pvv/.aws/credentials"]
+  shared_config_files = ["/home/pvv/.aws/config"]
 }
 
 # VPC 1
@@ -25,24 +25,7 @@ resource "aws_internet_gateway" "vpc1_igw" {
   vpc_id = aws_vpc.vpc1.id
 }
 
-## Security group
-# resource "aws_security_group" "vpc1_sg" {
-#   description = "Allow ssh connection to appServer"
-#   vpc_id = aws_vpc.vpc1.id
-#   ingress = [ {
-#     description = "ssh"
-#     from_port = 0
-#     cidr_blocks = [aws_subnet.subnetA.cidr_block]
-#     protocol = "tcp"
-#     self = false
-#     to_port = 22
-#   } ]
-# }
 
-## Security assoc. to subnetA
-# resource "aws_securit" "name" {
-  
-# }
 
 
 ## Subnet A
@@ -69,8 +52,8 @@ resource "aws_route_table_association" "rtbA_subnetA" {
 
 ### App Server
 resource "aws_instance" "app_server" {
-  #ubuntu-xenial-16.04-amd64-server-20210928
-  ami           = "ami-03bcd79f25ca6b127"
+  #ubuntu-jammy-22.04-amd64-server-20220420
+  ami           = "ami-0fb99f22ad0184043"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnetA.id
   key_name = aws_key_pair.deployer.key_name
@@ -95,4 +78,80 @@ resource "aws_eip" "AppServerEIP" {
 resource "aws_eip_association" "appServer_eip" {
   instance_id = aws_instance.app_server.id
   allocation_id = aws_eip.AppServerEIP.id
+}
+
+### Security group
+resource "aws_security_group" "appServer_sg" {
+  description = "Allow ssh connection to appServer"
+  vpc_id = aws_vpc.vpc1.id
+  ingress {
+    description = "ssh"
+    from_port = 22
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol = "tcp"
+    to_port = 22
+  }
+}
+
+### Security assoc. to ec2
+resource "aws_network_interface_sg_attachment" "appServer_sg_assoc" {
+  security_group_id = aws_security_group.appServer_sg.id
+  network_interface_id = aws_instance.app_server.primary_network_interface_id
+}
+
+## subnet B
+resource "aws_subnet" "subnetB" {
+  vpc_id = aws_vpc.vpc1.id
+  cidr_block = "10.0.2.0/24"
+  availability_zone = "ca-central-1a"
+}
+
+## subnet B
+resource "aws_subnet" "subnetC" {
+  vpc_id = aws_vpc.vpc1.id
+  cidr_block = "10.0.3.0/24"
+  availability_zone = "ca-central-1b"
+}
+
+## DB subnet group in two az for rds
+resource "aws_db_subnet_group" "db_subnet_group" {
+  subnet_ids = [aws_subnet.subnetB.id, aws_subnet.subnetC.id]
+}
+
+## Security group for RDS
+resource "aws_security_group" "rds" {
+  vpc_id = aws_vpc.vpc1.id
+
+  ingress {
+    description = "From ec2 appServer sg only"
+    from_port = 0
+    to_port = 0
+    protocol = -1
+    security_groups = [aws_security_group.appServer_sg.id ]
+  }
+}
+
+## Parameter group for RDS
+resource "aws_db_parameter_group" "rds-test" {
+  name = "rds-test"
+  family = "postgres14"
+
+  parameter {
+    name = "log_connections"
+    value = "1"
+  }
+}
+
+resource "aws_db_instance" "db" {
+  identifier = "test-db"
+  instance_class = "db.t3.micro"
+  allocated_storage = 5
+  engine = "postgres"
+  engine_version = "14.2"
+  username = "paul"
+  password = var.db_password
+  db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
+  vpc_security_group_ids = [aws_security_group.rds.id]
+  parameter_group_name = aws_db_parameter_group.rds-test.name
+  skip_final_snapshot = true
 }
