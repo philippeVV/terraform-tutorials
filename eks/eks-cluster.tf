@@ -1,38 +1,17 @@
-module "eks" {
-  source = "terraform-aws-modules/eks/aws"
-  version = "17.24.0"
-  cluster_name = local.cluster_name
-  cluster_version = "1.20"
-  subnets = module.vpc.private_subnets
+resource "aws_eks_cluster" "main" {
+  name = var.cluster_name
+  role_arn = aws_iam_role.eks.arn
 
-  vpc_id = module.vpc.vpc_id
-
-  workers_group_defaults = {
-    root_volume_type = "gp2"
+  vpc_config {
+    security_group_ids = [ aws_security_group.eks.id ]
+    subnet_ids = module.vpc.private_subnets
+    endpoint_private_access = true
+    endpoint_public_access = false
   }
 
-  worker_groups = [
-    {
-      name = "worker-group-1"
-      instance_type = "t2.small"
-      additional_userdata = "echo foo bar"
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
-      asg_desired_capacity = 2
-    },      
-    {
-      name = "worker-group-2"
-      instance_type = "t2.medium"
-      additional_userdata = "echo foo bar"
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
-      asg_desired_capacity = 1
-    },
+  depends_on = [
+    aws_iam_role_policy_attachment.main-cluster-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.main-cluster-AmazonEKSServicePolicy,
   ]
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}

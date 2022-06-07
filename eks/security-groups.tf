@@ -1,43 +1,49 @@
-resource "aws_security_group" "worker_group_mgmt_one" {
-  name_prefix = "worker_group_mgmt_one"
+
+
+# Cluster
+resource "aws_security_group" "eks" {
+  name = var.cluster_name
+  description = "Cluster communication with worker nodes"
   vpc_id = module.vpc.vpc_id
 
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
-      cidr_blocks = [
-          "10.0.0.0/8",
-      ]
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = concat(module.vpc.public_subnets, var.vpn_cidr_block)
   }
 }
 
-resource "aws_security_group" "worker_group_mgmt_two" {
-  name_prefix = "worker_group_mgmt_two"
-  vpc_id = module.vpc.vpc_id
+# Worker nodes
 
-  ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
-      cidr_blocks = [
-          "192.168.0.0/16",
-      ]
+
+resource "aws_security_group" "main-node" {
+  name        = "terraform-eks-main-node"
+  description = "Security group for all nodes in the cluster"
+  vpc_id      = module.vpc.vpc_id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
-resource "aws_security_group" "all_worker_mgmt" {
-  name_prefix = "worker_group_mgmt_one"
-  vpc_id = module.vpc.vpc_id
-
-  ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
-      cidr_blocks = [
-          "10.0.0.0/8",
-          "172.16.0.0/12",
-          "192.168.0.0/16"
-      ]
-  }
+resource "aws_security_group_rule" "main-node-ingress-self" {
+  type              = "ingress"
+  description       = "Allow node to communicate with each other"
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.main-node.id
+  to_port           = 65535
+  cidr_blocks       = concat(module.vpc.private_subnets, var.vpn_cidr_block)
+  
 }
