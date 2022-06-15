@@ -1,0 +1,87 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            ae:66:10:72:26:20:09:23:ad:d0:fe:84:a2:b0:6d:92
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=vpn.velz3n.com
+        Validity
+            Not Before: Jun  8 15:04:10 2022 GMT
+            Not After : Sep 10 15:04:10 2024 GMT
+        Subject: CN=server.vpn.velz3n.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:9c:6d:38:24:82:ce:58:e3:53:c6:f8:00:df:c1:
+                    0c:21:fe:c2:52:3a:4c:b9:56:ac:08:23:06:66:b6:
+                    75:d3:8d:fe:7d:92:1c:5f:7f:ff:ef:51:9b:17:3c:
+                    64:52:7e:4c:9f:a0:e5:2d:e8:17:33:ba:f8:91:68:
+                    f8:6b:f9:bd:c0:13:3b:1c:42:8f:fd:e3:cd:52:f2:
+                    05:2c:e4:17:d7:dc:0e:92:6c:e4:a9:ef:eb:a1:d1:
+                    ba:f4:4a:12:46:f3:45:09:d8:3f:0e:30:50:78:84:
+                    58:eb:7b:ed:bd:68:d9:04:a2:53:6c:38:d5:62:9a:
+                    61:08:b3:ef:37:95:57:01:46:e2:f5:1a:43:0d:06:
+                    6c:a9:56:e1:25:b9:d0:4c:e3:5d:d9:a5:8b:94:4f:
+                    4e:d1:4f:c6:41:2c:ec:bf:e1:f6:6d:d7:f7:91:90:
+                    97:0f:88:89:50:7c:a8:35:18:c1:f7:1b:9d:85:d8:
+                    4b:72:6a:e3:98:9e:f5:23:bf:49:a2:82:bf:e0:8d:
+                    95:c8:f3:19:95:6b:2e:03:8a:92:8c:c3:bc:89:7a:
+                    90:0b:5a:d4:61:16:df:c1:20:8d:2f:af:db:25:50:
+                    68:41:48:b4:ae:dc:f5:d1:35:92:06:c6:9a:5e:ce:
+                    7e:0b:c4:52:11:1a:24:7b:88:3a:46:0c:70:3d:79:
+                    dc:7f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                81:61:50:2D:36:D5:AD:27:B1:C2:5E:B2:75:96:74:4D:04:73:02:51
+            X509v3 Authority Key Identifier: 
+                keyid:3C:CE:BA:74:84:60:71:1A:8C:38:A1:43:5B:91:C9:BA:E7:2D:17:5E
+                DirName:/CN=vpn.velz3n.com
+                serial:16:74:4E:74:09:49:2B:C2:8D:15:F9:DD:91:71:15:59:17:B0:25:54
+
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Key Usage: 
+                Digital Signature, Key Encipherment
+            X509v3 Subject Alternative Name: 
+                DNS:server.vpn.velz3n.com
+    Signature Algorithm: sha256WithRSAEncryption
+         16:69:57:e8:13:fd:1d:17:5c:ba:db:18:27:1d:a1:24:d4:65:
+         49:3c:20:7a:13:9c:a9:22:7c:01:dc:b8:a3:11:b4:2f:85:e6:
+         6f:f5:7d:51:05:41:3a:eb:34:28:55:5c:69:73:dd:50:77:5f:
+         64:dc:4f:40:0c:f2:96:81:64:86:2d:44:ef:1c:6c:43:16:a3:
+         42:68:6c:94:d7:65:df:56:6e:29:1c:a7:6b:d8:a1:e1:63:53:
+         4f:80:38:f8:5a:2f:6d:ff:cb:54:16:11:e2:d8:77:39:ec:3a:
+         d3:00:e2:58:fe:87:29:0e:a2:8b:4d:df:d8:b3:14:0a:b0:0a:
+         1e:e0:b4:3c:0d:3a:40:42:ea:c3:6e:56:d1:f5:2b:7b:e1:21:
+         62:47:52:63:9b:e6:38:78:e0:18:1a:6f:45:de:dd:05:76:5e:
+         0b:44:2f:2a:d9:5a:7a:ef:1e:5d:d9:bb:0a:a5:dd:93:32:da:
+         18:cb:63:89:2d:2f:fd:67:14:39:16:b3:0d:e4:5e:0e:e4:a4:
+         0c:1c:40:ec:1d:dc:b7:0e:e8:79:ca:f9:97:b0:33:5d:03:7d:
+         fa:69:1b:72:93:de:b1:9d:8a:44:0c:43:aa:8d:ad:aa:74:cd:
+         3a:7b:14:a4:83:be:ef:25:4e:08:9f:1a:9a:6b:75:30:22:17:
+         9c:eb:8c:9f
+-----BEGIN CERTIFICATE-----
+MIIDjDCCAnSgAwIBAgIRAK5mEHImIAkjrdD+hKKwbZIwDQYJKoZIhvcNAQELBQAw
+GTEXMBUGA1UEAwwOdnBuLnZlbHozbi5jb20wHhcNMjIwNjA4MTUwNDEwWhcNMjQw
+OTEwMTUwNDEwWjAgMR4wHAYDVQQDDBVzZXJ2ZXIudnBuLnZlbHozbi5jb20wggEi
+MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCcbTgkgs5Y41PG+ADfwQwh/sJS
+Oky5VqwIIwZmtnXTjf59khxff//vUZsXPGRSfkyfoOUt6BczuviRaPhr+b3AEzsc
+Qo/9481S8gUs5BfX3A6SbOSp7+uh0br0ShJG80UJ2D8OMFB4hFjre+29aNkEolNs
+ONVimmEIs+83lVcBRuL1GkMNBmypVuEludBM413ZpYuUT07RT8ZBLOy/4fZt1/eR
+kJcPiIlQfKg1GMH3G52F2EtyauOYnvUjv0migr/gjZXI8xmVay4DipKMw7yJepAL
+WtRhFt/BII0vr9slUGhBSLSu3PXRNZIGxppezn4LxFIRGiR7iDpGDHA9edx/AgMB
+AAGjgccwgcQwCQYDVR0TBAIwADAdBgNVHQ4EFgQUgWFQLTbVrSexwl6ydZZ0TQRz
+AlEwVAYDVR0jBE0wS4AUPM66dIRgcRqMOKFDW5HJuuctF16hHaQbMBkxFzAVBgNV
+BAMMDnZwbi52ZWx6M24uY29tghQWdE50CUkrwo0V+d2RcRVZF7AlVDATBgNVHSUE
+DDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBaAwIAYDVR0RBBkwF4IVc2VydmVyLnZw
+bi52ZWx6M24uY29tMA0GCSqGSIb3DQEBCwUAA4IBAQAWaVfoE/0dF1y62xgnHaEk
+1GVJPCB6E5ypInwB3LijEbQvheZv9X1RBUE66zQoVVxpc91Qd19k3E9ADPKWgWSG
+LUTvHGxDFqNCaGyU12XfVm4pHKdr2KHhY1NPgDj4Wi9t/8tUFhHi2Hc57DrTAOJY
+/ocpDqKLTd/YsxQKsAoe4LQ8DTpAQurDblbR9St74SFiR1Jjm+Y4eOAYGm9F3t0F
+dl4LRC8q2Vp67x5d2bsKpd2TMtoYy2OJLS/9ZxQ5FrMN5F4O5KQMHEDsHdy3Duh5
+yvmXsDNdA336aRtyk96xnYpEDEOqja2qdM06exSkg77vJU4Inxqaa3UwIhec64yf
+-----END CERTIFICATE-----

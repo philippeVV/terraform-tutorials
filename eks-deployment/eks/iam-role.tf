@@ -1,30 +1,30 @@
 # Cluster
 resource "aws_iam_role" "eks" {
-  name = "eks-main-cluster"
+  name               = "eks-main-cluster"
   assume_role_policy = <<POLICY
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "eks.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-      }
-    ]
-  }
-  POLICY
+{
+"Version": "2012-10-17",
+"Statement": [
+    {
+    "Effect": "Allow",
+    "Principal": {
+        "Service": "eks.amazonaws.com"
+    },
+    "Action": "sts:AssumeRole"
+    }
+]
+}
+POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "main-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role = aws_iam_role.eks.name
+  role       = aws_iam_role.eks.name
 }
 
 resource "aws_iam_role_policy_attachment" "main-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role = aws_iam_role.eks.name
+  role       = aws_iam_role.eks.name
 }
 
 # Worker nodes
@@ -32,19 +32,19 @@ resource "aws_iam_role" "main-node" {
   name = "terraform-eks-main-node"
 
   assume_role_policy = <<POLICY
-    {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-        "Effect": "Allow",
-        "Principal": {
-            "Service": "ec2.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-        }
-    ]
-    }
-    POLICY
+{
+"Version": "2012-10-17",
+"Statement": [
+  {
+  "Effect": "Allow",
+  "Principal": {
+      "Service": "ec2.amazonaws.com"
+  },
+  "Action": "sts:AssumeRole"
+  }
+]
+}
+POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "main-node-AmazonEKSWorkerNodePolicy" {
@@ -79,7 +79,7 @@ resource "aws_iam_instance_profile" "main-node" {
 
 # alb ingress
 resource "aws_iam_policy" "alb-ingress" {
-  name        = "alb-ingress-policy"
+  name = "alb-ingress-policy"
 
   policy = <<EOF
 {

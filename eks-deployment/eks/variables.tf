@@ -4,11 +4,11 @@ variable "region" {
 }
 
 variable "cluster_name" {
-  default = "terraform-eks"
+  default     = "terraform-eks"
   description = "EKS cluster name"
 }
 
 variable "vpn_cidr_block" {
-  type = list
-  default = ["0.0.0.0/0"]
+  type    = list(any)
+  default = ["10.20.0.0/22"]
 }
